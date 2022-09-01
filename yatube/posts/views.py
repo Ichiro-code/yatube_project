@@ -1,14 +1,14 @@
 from django.shortcuts import render
+from .models import Post
 # Create your views here.
 
 
 def index(request):
-    template = 'posts/index.html'
-    text = "Это главная страница проекта Yatube"
+    posts = Post.objects.order_by('-pub_date')[:10]
     context = {
-        'text': text,
+        'posts': posts,
     }
-    return render(request, template, context)
+    return render(request, 'posts/index.html', context)
 
 
 def group_posts(request, slug):
